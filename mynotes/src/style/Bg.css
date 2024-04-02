@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0; 
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.background_contain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.838);
+  position: relative;
+}
+
+.background_contain #main_tag {
+  font-family: "Libre Baskerville", serif;
+  font-size: 10vw;
+  opacity: 0.4;
+  font-weight: 900;
+  position: fixed;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#pencil {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  cursor: pointer;
+  color: grey;
+  font-size: 20px;
+}
+
+#pencil:active {
+  color: white;
+}
+
+.field {
+  width: 100%;
+  border: none;
+  background: rgb(210, 210, 210);
+  border-radius: 10px;
+  padding: 0 10px;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif;
+}
+
+#text_field {
+  height: 40px;
+  margin: 10px 0;
+}
+
+#form_title {
+  font-family: "Silkscreen", sans-serif;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#form_btn {
+  text-align: left;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  background: rgb(106, 206, 70);
+  cursor: pointer;
+}
+
+.form_div {
+  text-align: left;
+}
+
+.front-part {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+}
+
+
+/* media query */
+
+@media (max-width: 1050px){
+  .background_contain #main_tag{
+    font-size: 15vw;
+  }
+}
+
+@media (max-width: 640px){
+  .background_contain #main_tag{
+    font-size: 20vw;
+  }
+}
