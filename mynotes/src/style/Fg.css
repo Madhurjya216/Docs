@@ -17,8 +17,14 @@
   z-index: 99;
   position: relative;
   text-align: left;
-  height: auto;
+  height: 150px;
   padding: 10px;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+
+.note_box::-webkit-scrollbar {
+  display: none;
 }
 
 .contain1 {
@@ -32,7 +38,7 @@
 
 .contain2 {
   padding-bottom: 15px;
-  overflow: auto;
+  /* Enable vertical scrolling */
 }
 
 .contain1 h3 {
@@ -48,13 +54,13 @@
   font-size: 14px;
   color: rgb(175, 174, 174);
   width: 100%;
+  height: 100%;
 }
 
 .contain2::-webkit-scrollbar {
   /* display: none; */
-  height: 5px;
-  background: rgb(250, 250, 250);
-  border-radius: 10px;
+  background: red;
+  height: 1px;
 }
 
 .foregrd_container {
