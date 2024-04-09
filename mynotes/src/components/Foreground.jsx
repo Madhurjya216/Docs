@@ -31,7 +31,7 @@ function Foreground() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
 
   return (
     <div className="foregrd_container">

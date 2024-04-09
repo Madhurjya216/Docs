@@ -23,7 +23,6 @@ function Background() {
       e.preventDefault();
       const url = `http://localhost:9500/upload`
       await axios.post(url, form);
-      // window.redirect("/");
       setIsModalOpen(false);
     } catch(err){
       console.log(err);

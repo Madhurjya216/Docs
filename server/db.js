@@ -7,9 +7,9 @@ module.exports = () => {
         process.env.MONGODB_URI
       )
       .then((res) => {
-        console.log("connected!");
+        console.log("connected!"); 
       });
   } catch (error) {
     console.log(error);
   }
-};
+}; 
