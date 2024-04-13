@@ -25,7 +25,7 @@ const getRoute = async (req, res) => {
   try {
     // Check if user is logged in before proceeding
     // if (!req.isAuthenticated()) {
-    //   return res.status(401).send("Unauthorized"); 
+    //   return res.status(401).send("Unauthorized");
     // }
 
     const data = await Note.find();
@@ -62,31 +62,55 @@ const Signup = (req, res) => {
       fullname: req.body.fullname,
       email: req.body.email,
     });
-  
+
     User.register(data, req.body.password).then(function (registeredUser) {
       passport.authenticate("local")(req, res, function () {
         res.redirect("http://localhost:3000/home");
       });
     });
   } catch (error) {
-    console.log('Error');
+    console.log("Error");
   }
-}
+};
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/home",
-    failureRedirect: "/login",
-  })
-);
+// const Login = (req, res) => {
+//   try {
+//     passport.authenticate("local", {
+//       successRedirect: "http://localhost:3000/home",
+//       failureRedirect: "http://localhost:3000/login",
+//     });
+//   } catch (error) {
+//     console.log("Error");
+//   }
+// };
 
-router.get("/logout", function (req, res) {
+const Login = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (!user) {
+      // Authentication failed, redirect to login page
+      return res.redirect("http://localhost:3000/login");
+    }
+    // Authentication successful, redirect to home page
+    req.login(user, (err) => {
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      return res.redirect("http://localhost:3000/home");
+    });
+  })(req, res, next);
+};
+
+const Logout = (req, res) => {
   req.logout(function (err) {
     if (err) return next(err);
     res.redirect("/login");
   });
-});
+};
 
 function isLoggIn(req, res, next) {
   if (req.isAuthenticated()) {
@@ -95,6 +119,4 @@ function isLoggIn(req, res, next) {
   res.redirect("/login");
 }
 
-
-
-module.exports = { postRoute, getRoute, deleteRoute, Signup };
+module.exports = { postRoute, getRoute, deleteRoute, Signup, Login, Logout, isLoggIn };

@@ -4,7 +4,6 @@ import { FaPencilAlt } from "react-icons/fa";
 import UploadForm from "./UploadForm";
 import Fg from "./Foreground";
 
-
 function Background() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form, setForm] = useState({
@@ -15,33 +14,32 @@ function Background() {
   const handleChanges = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setForm({...form, [name]: value})
+    setForm({ ...form, [name]: value });
   };
 
   const uploadForm = async (e) => {
     try {
       e.preventDefault();
-  
+
       const url = `http://localhost:9500/upload`;
-  
+
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(form),
       });
-  
+
       if (response.ok) {
         setIsModalOpen(false);
       } else {
-        throw new Error('Failed to upload form data');
+        throw new Error("Failed to upload form data");
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   const openModal = () => {
     setIsModalOpen(true);

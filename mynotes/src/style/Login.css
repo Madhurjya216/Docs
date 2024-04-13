@@ -4,7 +4,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  background: rgb(29, 29, 29);
+  background: black;
   color: white;
   font-family: "Poppins";
 }
@@ -26,7 +26,6 @@
 
 .signup_form form {
   width: 400px;
-  /* border: 1px solid; */
 }
 
 .div-input {
@@ -54,7 +53,7 @@
 #submit input {
   border-radius: 50px;
   font-size: 15px;
-  background: rgb(18, 193, 15);
+  background: white;
   border: none;
   cursor: pointer;
   color: black;
@@ -62,7 +61,8 @@
 }
 
 form h1 {
-  font-size: 40px;
+  font-size: 45px;
+  opacity: 0.5;
 }
 
 .signup-login {
@@ -71,6 +71,10 @@ form h1 {
   margin-top: 3;
 }
 
-.signup-container{
-    margin-top: 130px;;;
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 }

@@ -5,7 +5,15 @@ const port = 9500;
 const cors = require("cors");
 const db = require("./db");
 const bodyParser = require("body-parser");
-const { postRoute, getRoute, deleteRoute, Signup } = require("./route/routes");
+const {
+  postRoute,
+  getRoute,
+  deleteRoute,
+  Signup,
+  Login,
+  Logout,
+  isLoggIn
+} = require("./route/routes");
 const expressSession = require("express-session");
 const passport = require("passport");
 
@@ -25,8 +33,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-// passport.serializeUser(usersRouter.serializeUser());
-// passport.deserializeUser(usersRouter.deserializeUser()); 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -43,9 +49,11 @@ app.get("/", function (req, res) {
 
 // routes
 app.use("/register", Signup);
-app.use("/upload", postRoute);
-app.use("/get", getRoute);
-app.use("/delete/:id", deleteRoute);
+app.use("/login", Login);
+app.use("/logout", Logout);
+app.use("/upload", isLoggIn, postRoute);
+app.use("/get", isLoggIn, getRoute);
+app.use("/delete/:id", isLoggIn,deleteRoute);
 
 // server listening
 app.listen(port, () => {

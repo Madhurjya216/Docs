@@ -46,6 +46,9 @@ function Foreground() {
           <div className="contain2">
             <p>{item.message}</p>
           </div>
+          <span>
+            <a href="http://localhost:9500/logout">logout</a>
+          </span>
         </div>
       ))}
     </div>
