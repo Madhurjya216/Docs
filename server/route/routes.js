@@ -21,12 +21,18 @@ const postRoute = async (req, res) => {
   }
 };
 
-const getRoute =  async (req, res) => {
+const getRoute = async (req, res) => {
   try {
+    // Check if user is logged in before proceeding
+    // if (!req.isAuthenticated()) {
+    //   return res.status(401).send("Unauthorized"); 
+    // }
+
     const data = await Note.find();
     res.send(data);
   } catch (error) {
     console.log(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -49,30 +55,33 @@ const deleteRoute = async (req, res) => {
 };
 
 // passport stuff
-router.post("/signup", function (req, res) {
-  const data = new User({
-    username: req.body.username,
-    fullname: req.body.fullname,
-    email: req.body.email,
-  });
-
-  User.register(data, req.body.password).then(function (registeredUser) {
-    passport.authenticate("local")(req, res, function () {
-      res.redirect("/get");
-      res.send("ok!");
+const Signup = (req, res) => {
+  try {
+    const data = new User({
+      username: req.body.username,
+      fullname: req.body.fullname,
+      email: req.body.email,
     });
-  });
-});
+  
+    User.register(data, req.body.password).then(function (registeredUser) {
+      passport.authenticate("local")(req, res, function () {
+        res.redirect("http://localhost:3000/home");
+      });
+    });
+  } catch (error) {
+    console.log('Error');
+  }
+}
 
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/get",
+    successRedirect: "/home",
     failureRedirect: "/login",
   })
 );
 
-router.get("/logout", function (req, res) { 
+router.get("/logout", function (req, res) {
   req.logout(function (err) {
     if (err) return next(err);
     res.redirect("/login");
@@ -86,4 +95,6 @@ function isLoggIn(req, res, next) {
   res.redirect("/login");
 }
 
-module.exports = { postRoute, getRoute, deleteRoute };
+
+
+module.exports = { postRoute, getRoute, deleteRoute, Signup };

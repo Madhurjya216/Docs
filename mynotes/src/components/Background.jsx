@@ -3,7 +3,7 @@ import "../style/Bg.css";
 import { FaPencilAlt } from "react-icons/fa";
 import UploadForm from "./UploadForm";
 import Fg from "./Foreground";
-import axios from "axios";
+
 
 function Background() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,15 +19,29 @@ function Background() {
   };
 
   const uploadForm = async (e) => {
-    try{
+    try {
       e.preventDefault();
-      const url = `http://localhost:9500/upload`
-      await axios.post(url, form);
-      setIsModalOpen(false);
-    } catch(err){
-      console.log(err);
+  
+      const url = `http://localhost:9500/upload`;
+  
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+  
+      if (response.ok) {
+        setIsModalOpen(false);
+      } else {
+        throw new Error('Failed to upload form data');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+  
 
   const openModal = () => {
     setIsModalOpen(true);

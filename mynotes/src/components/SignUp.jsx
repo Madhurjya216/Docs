@@ -1,28 +1,44 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "../style/SignUp.css";
-import axios from "axios";
-
 
 const SignUp = () => {
+  const [data, setData] = useState({
+    username: "",
+    fullname: "",
+    email: "",
+    password: "",
+  });
 
-  const [signup, setSignup] = useState('');
-
-  const handleChanges = (e) => {
+  const handleChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setSignup({...signup, [name]: value})
-  }
+    setData({ ...data, [name]: value });
+  };
 
   const registerUser = async (e) => {
     try {
       e.preventDefault();
-      const url = "http://localhost:9500/signup";
-      await axios.post(url, signup);
+  
+      const url = "http://localhost:9500/register";
+  
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      if (response.ok) {
+        window.location.href = "/home";
+      } else {
+        throw new Error("Failed to register user");
+      }
     } catch (error) {
       console.log(`Error while registering user: ${error}`);
     }
-  }
-
+  };
+  
 
   return (
     <div class="signup-container">
@@ -32,25 +48,30 @@ const SignUp = () => {
         </span>
       </div>
       <div class="signup_form">
-        <form action="/signup" method="post" onSubmit={registerUser}>
+        <form action="/register" method="post" onSubmit={registerUser}>
           <div class="div-input">
-            <p>Fullname</p>
-            <input type="text" name="fullname" id="" onChange={handleChanges} />
+            <p>Username</p>
+            <input type="text" name="username" id="" onChange={handleChange} />
           </div>
 
           <div class="div-input">
-            <p>Username</p>
-            <input type="text" name="username" id="" onChange={handleChanges} />
+            <p>Fullname</p>
+            <input type="text" name="fullname" id="" onChange={handleChange} />
           </div>
 
           <div class="div-input">
             <p>Email address</p>
-            <input type="email" name="email" id="" onChange={handleChanges} />
+            <input type="email" name="email" id="" onChange={handleChange} />
           </div>
 
           <div class="div-input">
             <p>Password</p>
-            <input type="password" name="password" id="" onChange={handleChanges} />
+            <input
+              type="password"
+              name="password"
+              id=""
+              onChange={handleChange}
+            />
           </div>
 
           <div class="div-input" id="submit">

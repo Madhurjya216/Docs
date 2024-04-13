@@ -19,6 +19,7 @@
 .background_contain #main_tag {
   font-family: "Libre Baskerville", serif;
   font-size: 10vw;
+  background: black;
   opacity: 0.4;
   font-weight: 900;
   position: fixed;
