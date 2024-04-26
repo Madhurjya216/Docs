@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../style/Login.css";
+import axios from "axios";
 
 function Login() {
   const [data, setData] = useState({
@@ -8,10 +9,35 @@ function Login() {
   });
 
   const handleChanges = (e) => {
+    console.log(e.target.value)
     var name = e.target.name;
     var value = e.target.value;
     setData({ ...data, [name]: value });
   };
+
+  // const handleLogin = async (e) => {
+  //   try {
+  //     e.preventDefault();
+
+  //     const url = "http://localhost:9500/login";
+
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (response.ok) {
+  //       window.location.href = "/home";
+  //     } else {
+  //       throw new Error("Failed to register user");
+  //     }
+  //   } catch (error) {
+  //     console.log(`Error while registering user: ${error}`);
+  //   }
+  // };
 
   const handleLogin = async (e) => {
     try {
@@ -19,21 +45,21 @@ function Login() {
 
       const url = "http://localhost:9500/login";
 
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await axios.post(url, data, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
       });
 
-      if (response.ok) {
-        window.location.href = "/home";
+      if (response.status === 200) {
+        // Redirect only if login is successful
+        window.location.href = "http://localhost:3000/home";
       } else {
-        throw new Error("Failed to register user");
+        // Handle unsuccessful login
+        throw new Error("Failed to login");
       }
     } catch (error) {
-      console.log(`Error while registering user: ${error}`);
+      console.log(`Error while logging in: ${error}`);
     }
   };
 
@@ -63,11 +89,9 @@ function Login() {
                 onChange={handleChanges}
               />
             </div>
-
             <div class="div-input" id="submit">
               <input type="submit" value="Continue" />
             </div>
-
             <div class="signup-login">
               <p>
                 Don't have an account? <a href="/">Sign up for Docs</a>

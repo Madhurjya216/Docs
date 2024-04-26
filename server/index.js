@@ -12,10 +12,11 @@ const {
   Signup,
   Login,
   Logout,
-  isLoggIn
+  isLoggIn,
 } = require("./route/routes");
 const expressSession = require("express-session");
 const passport = require("passport");
+const usersRouter = require("./schema/userSchema");
 
 // middleware
 app.use(express.json());
@@ -33,15 +34,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
+passport.serializeUser(usersRouter.serializeUser());
+passport.deserializeUser(usersRouter.deserializeUser());
 
 app.get("/", function (req, res) {
   res.send("Hello World");
@@ -51,9 +45,9 @@ app.get("/", function (req, res) {
 app.use("/register", Signup);
 app.use("/login", Login);
 app.use("/logout", Logout);
-app.use("/upload", isLoggIn, postRoute);
-app.use("/get", isLoggIn, getRoute);
-app.use("/delete/:id", isLoggIn,deleteRoute);
+app.use("/upload", postRoute);
+app.use("/get", getRoute);
+app.use("/delete/:id", deleteRoute);
 
 // server listening
 app.listen(port, () => {

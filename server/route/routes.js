@@ -73,37 +73,10 @@ const Signup = (req, res) => {
   }
 };
 
-// const Login = (req, res) => {
-//   try {
-//     passport.authenticate("local", {
-//       successRedirect: "http://localhost:3000/home",
-//       failureRedirect: "http://localhost:3000/login",
-//     });
-//   } catch (error) {
-//     console.log("Error");
-//   }
-// };
-
-const Login = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      console.error(err);
-      return next(err);
-    }
-    if (!user) {
-      // Authentication failed, redirect to login page
-      return res.redirect("http://localhost:3000/login");
-    }
-    // Authentication successful, redirect to home page
-    req.login(user, (err) => {
-      if (err) {
-        console.error(err);
-        return next(err);
-      }
-      return res.redirect("http://localhost:3000/home");
-    });
-  })(req, res, next);
-};
+const Login = passport.authenticate("local", {
+  successRedirect: "http://localhost:3000/home",
+  failureRedirect: "http://localhost:3000/login",
+});
 
 const Logout = (req, res) => {
   req.logout(function (err) {
@@ -119,4 +92,12 @@ function isLoggIn(req, res, next) {
   res.redirect("/login");
 }
 
-module.exports = { postRoute, getRoute, deleteRoute, Signup, Login, Logout, isLoggIn };
+module.exports = {
+  postRoute,
+  getRoute,
+  deleteRoute,
+  Signup,
+  Login,
+  Logout,
+  isLoggIn,
+};
