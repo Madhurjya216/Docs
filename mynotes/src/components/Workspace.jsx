@@ -7,11 +7,12 @@ import { Routes, Route } from "react-router-dom";
 function Workspace() {
   return (
     <>
-      <Routes>
+    <Bg />
+      {/* <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route exact path="/home" element={<Bg />} />
-      </Routes>
+      </Routes> */}
     </>
   );
 }

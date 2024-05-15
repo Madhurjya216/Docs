@@ -21,7 +21,7 @@ function Background() {
     try {
       e.preventDefault();
 
-      const url = `http://localhost:9500/upload`;
+      const url = `https://docs-server-zkdf.onrender.com/upload`;
 
       const response = await fetch(url, {
         method: "POST",

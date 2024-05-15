@@ -8,7 +8,7 @@ function Foreground() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get("http://localhost:9500/get");
+      const res = await axios.get(`https://docs-server-zkdf.onrender.com/get`);
       setData(res.data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -17,10 +17,10 @@ function Foreground() {
 
   const deleteTodo = async (_id) => {
     try {
-      await axios.delete(`http://localhost:9500/delete/${_id}`);
+      await axios.delete(`https://docs-server-zkdf.onrender.com/delete/${_id}`);
       console.log("Deleted todo with ID:", _id);
       // Fetch updated data after deletion
-      const res = await axios.get("http://localhost:9500/get");
+      const res = await axios.get("https://docs-server-zkdf.onrender.com/get");
       setData(res.data); // Update state with the updated data
     } catch (error) {
       console.error("Error deleting todo:", error.message);
@@ -46,9 +46,6 @@ function Foreground() {
           <div className="contain2">
             <p>{item.message}</p>
           </div>
-          <span>
-            <a href="http://localhost:9500/logout">logout</a>
-          </span>
         </div>
       ))}
     </div>
